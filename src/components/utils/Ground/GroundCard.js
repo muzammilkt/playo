@@ -63,7 +63,7 @@ export default function GroundCard({ data, type }) {
         </IconWrapperStyle>
         <Typography variant="h5">{data && data.name}</Typography>
         <Typography sx={{ mt: 4 }} variant="subtitle2">
-          {data && data.hod}
+          {data && data.place}
         </Typography>
         <Typography variant="subtitle2">{data && data.phoneNo}</Typography>
       </RootStyle>

@@ -50,7 +50,6 @@ function App() {
                 <Route path="turflist" element={<TurfList />} />
                 <Route path="addDetails" element={<AddTurfDetails />} />
                 <Route path="view" element={<ViewTurf />} />
-                {/* <Route path="view" element={<TimeList />} /> */}
               </Route>
 
               {/* route for time view */}
