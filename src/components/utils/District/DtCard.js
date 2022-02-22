@@ -12,7 +12,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 
 // ----------------------------------------------------------------------
 
-export default function GroundCard({ data, type }) {
+export default function DtCard({ data, type }) {
   const deleteDepartment = () => {
     console.log("onClinck");
   };
@@ -45,7 +45,7 @@ export default function GroundCard({ data, type }) {
     textTransform: "uppercase",
   }));
   return (
-    <Link to="/app/time/list" style={{ textDecoration: "none" }}>
+    <Link to="/app/spots/turflist" style={{ textDecoration: "none" }}>
       <RootStyle>
         <Grid
           container
@@ -53,19 +53,11 @@ export default function GroundCard({ data, type }) {
           justifyContent="flex-end"
           alignItems="center"
         >
-
-          {/* <Link to={`/app/department/edit/${data._id}`} style={{ color: "none" }}>
-            <ModeEditOutlineOutlinedIcon sx={{ margin: "8px", opacity: "0.5", height: "3vh", width: "2vw" }} />
-          </Link> */}
         </Grid>
         <IconWrapperStyle>
           {<ShortFormStyle>{data && data.shortName}</ShortFormStyle>}
         </IconWrapperStyle>
         <Typography variant="h5">{data && data.name}</Typography>
-        <Typography sx={{ mt: 4 }} variant="subtitle2">
-          {data && data.place}
-        </Typography>
-        <Typography variant="subtitle2">{data && data.phoneNo}</Typography>
       </RootStyle>
     </Link>
   );

@@ -9,7 +9,7 @@ import {
 
 export default function AddPersonal() {
     return (
-        <Page title="Department Data">
+        <Page title="Add Personal Data">
       <Container>
         <Stack
           direction="row"

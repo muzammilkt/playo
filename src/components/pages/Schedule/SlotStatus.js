@@ -10,7 +10,7 @@ import {
 
 export default function SlotStatus() {
     return (
-        <Page title="Department Data">
+        <Page title="Slot Status">
             <Container>
                 <Stack
                     direction="row"

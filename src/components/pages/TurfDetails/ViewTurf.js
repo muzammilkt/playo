@@ -10,7 +10,7 @@ import {
 export default function ViewTurf() {
     return (
         <div>
-            <Page title="Department Data">
+            <Page title="View Turf Details">
                 <Container>
                     <Stack
                         direction="row"

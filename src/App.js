@@ -17,6 +17,7 @@ import SlotStatus from "./components/pages/Schedule/SlotStatus";
 import AddTurfDetails from "../src/components/pages/TurfDetails/AddTurfDetails";
 import ViewTurf from "../src/components/pages/TurfDetails/ViewTurf";
 import TurfList from "../src/components/pages/TurfDetails/TurfList";
+import DistrictList from "../src/components/pages/TurfDetails/DistrictList";
 
 function App() {
   return (
@@ -38,25 +39,26 @@ function App() {
                   element={<Navigate to="/app/personaldata/view" />}
                 />
                 <Route path="view" element={<ViewPersonalDtls />} />
-                <Route path="addDetails" element={<AddPersonal />} />
+                <Route path="addprofile" element={<AddPersonal />} />
               </Route>
 
                {/* route for spots view */}
                <Route path="spots">
                 <Route
                   path="/app/spots"
-                  element={<Navigate to="/app/spots/turflist" />}
+                  element={<Navigate to="/app/spots/districtlist" />}
                 />
                 <Route path="turflist" element={<TurfList />} />
                 <Route path="addDetails" element={<AddTurfDetails />} />
                 <Route path="view" element={<ViewTurf />} />
+                <Route path="districtlist" element={<DistrictList />} />
               </Route>
 
               {/* route for time view */}
               <Route path="time">
                 <Route
                   path="/app/time"
-                  element={<Navigate to="/app/time/list" />}
+                  element={<Navigate to="/app/time/status" />}
                 />
                 <Route path="list" element={<TimeList />} />
                 <Route path="status" element={<SlotStatus />} />

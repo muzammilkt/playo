@@ -10,7 +10,7 @@ import {
 
 export default function TimeList() {
     return (
-        <Page title="Department Data">
+        <Page title="Time List">
             <Container>
                 <Stack
                     direction="row"

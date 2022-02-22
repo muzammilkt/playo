@@ -1,5 +1,7 @@
 import React from 'react'
 import Page from "../../utils/Page";
+import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 import {
   Stack,
   Container,
@@ -9,7 +11,7 @@ import {
 
 export default function ViewPersonalDtls() {
   return (
-    <Page title="Department Data">
+    <Page title="View Personal Data">
       <Container>
         <Stack
           direction="row"
@@ -20,9 +22,11 @@ export default function ViewPersonalDtls() {
           <Typography variant="h5" gutterBottom>
             View Personal data
           </Typography>
-          <Grid>
-            <h1>welcome</h1>
-          </Grid>
+          <Link to="/app/personaldata/addprofile">
+            <Grid>
+              <Button variant="contained">Add Data</Button>
+            </Grid>
+          </Link>
         </Stack>
       </Container>
     </Page>

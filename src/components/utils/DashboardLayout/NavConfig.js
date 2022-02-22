@@ -21,7 +21,7 @@ const NavConfig = [
   },
   {
     title:"Slot Status",
-    path:"/app/time/status",
+    path:"/app/time",
     icon:DateRangeIcon,
   },
   {

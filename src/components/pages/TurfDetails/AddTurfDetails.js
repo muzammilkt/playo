@@ -10,7 +10,7 @@ import {
 
 export default function AddTurfDetails() {
     return (
-        <Page title="Department Data">
+        <Page title="Add Turf Details">
             <Container>
                 <Stack
                     direction="row"
