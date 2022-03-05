@@ -1,11 +1,18 @@
 import React from 'react'
+import { Link as RouterLink } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+
 import Page from "../../utils/Page";
 import {
     Stack,
     Container,
     Typography,
     Grid,
+    Button,
+    Card,
+    Box
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function ViewTurf() {
     return (
@@ -21,13 +28,21 @@ export default function ViewTurf() {
                         <Typography variant="h5" gutterBottom>
                             View Turf
                         </Typography>
+
                         <Grid>
-                            <h1>welcome</h1>
+                            <Button
+                                variant="contained"
+                                component={RouterLink}
+                                to="/app/spots/addDetails"
+                                startIcon={<AddIcon />}
+                            >
+
+                                Add Details
+                            </Button>
                         </Grid>
                     </Stack>
                 </Container>
             </Page>
-
         </div>
     )
 };

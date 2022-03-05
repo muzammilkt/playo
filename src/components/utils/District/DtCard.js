@@ -4,7 +4,7 @@
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+// import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 // utils
 // import { fShortenNumber } from '../../../utils/formatNumber';
 
@@ -13,9 +13,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 // ----------------------------------------------------------------------
 
 export default function DtCard({ data, type }) {
-  const deleteDepartment = () => {
-    console.log("onClinck");
-  };
+  
   const { colorType } = type;
   const RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: "none",

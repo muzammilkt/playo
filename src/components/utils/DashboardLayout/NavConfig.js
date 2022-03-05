@@ -2,6 +2,7 @@ import PieChartIcon from "@mui/icons-material/PieChart";
 import FaceIcon from "@mui/icons-material/Face";
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import DateRangeIcon from '@mui/icons-material/DateRange';
+import ArticleIcon from '@mui/icons-material/Article';
 //nav bar options
 const NavConfig = [
   {
@@ -27,7 +28,8 @@ const NavConfig = [
   {
     title: "Turf Details",
     path: "/app/spots/view",
-    icon: SportsSoccerIcon,
+    icon: ArticleIcon
+    ,
   },
 ];
 
