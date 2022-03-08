@@ -37,6 +37,10 @@ export default function AddTurfDetails() {
     const [TurfType, setTurfType] = useState();
     const [TurfSize, setTurfSize] = useState();
 
+
+    console.log("one", turfImage1);
+    console.log("t", turfImage2);
+
     //add turf
     const handleAddTurf = async () => {
         try {
@@ -79,30 +83,7 @@ export default function AddTurfDetails() {
                                 <ImageUpload image={turfImage1} setImage={setTurfImage1} />
                                 {turfImage1 === "" && (
                                     <Typography sx={{ mt: 2 }} variant="body2" color="error">
-                                        Profile image is required
-                                    </Typography>
-                                )}
-                                <Typography sx={{ mt: 2, color: "gray" }} variant={"body2"}>
-                                    Allowed *.jpeg, *.jpg, *.png, *.gif <br />
-                                    max size: 1MB
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                        <Grid xs={12} sm={6} md={6} mb={2}>
-                            <Grid
-                                container
-                                direction="column"
-                                justifyContent="center"
-                                alignItems="center"
-                                xs={12}
-                                sm={12}
-                                md={4}
-                                lg={6}
-                            >
-                                <ImageUpload image={turfImage2} setImage={setTurfImage2} />
-                                {turfImage2 === "" && (
-                                    <Typography sx={{ mt: 2 }} variant="body2" color="error">
-                                        Profile image is required
+                                        Turf image is required
                                     </Typography>
                                 )}
                                 <Typography sx={{ mt: 2, color: "gray" }} variant={"body2"}>

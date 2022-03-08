@@ -21,7 +21,7 @@ export default function ImageUpload(props) {
   const { image, setImage } = props;
 
   const handleImageChange = (e) =>
-    e.target.files[0] && setImage(URL.createObjectURL(e.target.files[0]));
+    e.target.files[0] && setImage((e.target.files[0]));
 
   return (
     <>

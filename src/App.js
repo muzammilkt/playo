@@ -13,7 +13,6 @@ import ProfileProvider from "./context/profileContext";
 import AddPersonal from "./components/pages/PersonalData/AddPersonal";
 import ViewPersonalDtls from "./components/pages/PersonalData/ViewPersonalDtls";
 import TimeList from "../src/components/pages/Schedule/TimeList";
-import SlotStatus from "./components/pages/Schedule/SlotStatus";
 import AddTurfDetails from "../src/components/pages/TurfDetails/AddTurfDetails";
 import ViewTurf from "../src/components/pages/TurfDetails/ViewTurf";
 import TurfList from "../src/components/pages/TurfDetails/TurfList";
@@ -58,10 +57,9 @@ function App() {
               <Route path="time">
                 <Route
                   path="/app/time"
-                  element={<Navigate to="/app/time/status" />}
+                  element={<Navigate to="/app/time/list" />}
                 />
                 <Route path="list" element={<TimeList />} />
-                <Route path="status" element={<SlotStatus />} />
               </Route>
 
             </Route>

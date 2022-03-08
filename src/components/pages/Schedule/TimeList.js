@@ -6,6 +6,7 @@ import {
     Typography,
     Grid,
 } from "@mui/material";
+import TimeTable from "../../utils/TimeTable/TimeTable";
 
 
 export default function TimeList() {
@@ -22,9 +23,10 @@ export default function TimeList() {
                         Time List
                     </Typography>
                     <Grid>
-                        <h1>welcome</h1>
+                        <h4>Book Your Slot</h4>
                     </Grid>
                 </Stack>
+                <TimeTable />
             </Container>
         </Page>
     )

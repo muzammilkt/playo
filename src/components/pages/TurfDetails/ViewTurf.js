@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link as RouterLink } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import Page from "../../utils/Page";
 import {
@@ -49,29 +50,37 @@ export default function ViewTurf() {
                                 <CardMedia
                                     component="img"
                                     height="200"
-                                    image="https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png"
+                                    image="https://5.imimg.com/data5/RC/SQ/MY-37114643/football-turf-grass-500x500.jpg"
                                     alt="green iguana"
                                 />
                                 <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        muzammil
+                                    <Typography gutterBottom variant="h4" component="div">
+                                        marena
+                                    </Typography>
+                                    <Typography variant="h5" color="text.secondary">
+                                        By:muzammil
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
                                         9567167713
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
-                                        muzammil@gmail.com
+                                        marena@gmail.com
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
-                                        anthekkad(h),kumminipparamb(po),
+                                        marenaturf,kumminipparamb(po),
                                         malappuram(dt),kerala st
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        673638
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <Button size="small" color="primary">
-                                    edit
-                                </Button>
+                                <Link to="/app/spots/addDetails">
+                                    <Button size="small" color="primary">
+                                        edit
+                                    </Button>
+                                </Link>
                             </CardActions>
                         </Card>
                     </Grid>

@@ -1,16 +1,7 @@
-// import { Icon } from '@iconify/react';
-// import appleFilled from '@iconify/icons-ant-design/apple-filled';
-// material
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-// import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-// utils
-// import { fShortenNumber } from '../../../utils/formatNumber';
-
-// ----------------------------------------------------------------------
-
-// ----------------------------------------------------------------------
+import ReadMoreIcon from '@mui/icons-material/ReadMore';
 
 export default function GroundCard({ data, type }) {
   // const deleteDepartment = () => {
@@ -66,6 +57,9 @@ export default function GroundCard({ data, type }) {
           {data && data.place}
         </Typography>
         <Typography variant="subtitle2">{data && data.phoneNo}</Typography>
+        <Typography varient="body2">
+          <Link to="../view"><ReadMoreIcon/></Link>
+        </Typography>
       </RootStyle>
     </Link>
   );
