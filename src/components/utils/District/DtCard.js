@@ -4,6 +4,7 @@
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import { id } from "date-fns/locale";
 // import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 // utils
 // import { fShortenNumber } from '../../../utils/formatNumber';
@@ -43,7 +44,7 @@ export default function DtCard({ data, type }) {
     textTransform: "uppercase",
   }));
   return (
-    <Link to="/app/spots/turflist" style={{ textDecoration: "none" }}>
+    <Link to={`/app/spots/turflist/${data._id}`} style={{ textDecoration: "none" }}>
       <RootStyle>
         <Grid
           container
@@ -53,7 +54,7 @@ export default function DtCard({ data, type }) {
         >
         </Grid>
         <IconWrapperStyle>
-          {<ShortFormStyle>{data && data.shortName}</ShortFormStyle>}
+          {<ShortFormStyle>{data && data.shortform}</ShortFormStyle>}
         </IconWrapperStyle>
         <Typography variant="h5">{data && data.name}</Typography>
       </RootStyle>

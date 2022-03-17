@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState , useEffect} from 'react';
 import Page from "../../utils/Page";
 import DtCard from '../../utils/District/DtCard';
 import DtTypeConfig from '../../utils/District/DtTypeConfig';
@@ -8,64 +8,29 @@ import {
     Typography,
     Grid,
 } from "@mui/material";
-const spots = [{
-    name: "Alappuzha",
-    shortName: "AL"
-},
-{
-    name: "Ernakulam",
-    shortName: "ER"
-
-}, {
-    name: "Idukki",
-    shortName: "ID"
-
-}, {
-    name: "Kannur",
-    shortName: "KN"
-
-}, {
-    name: "Kasaragod",
-    shortName: "KS"
-
-}, {
-    name: "Kollam",
-    shortName: "KL"
-
-}, {
-    name: "Kottayam",
-    shortName: "KT"
-
-}, {
-    name: "Kozhikode",
-    shortName: "KZ"
-
-}, {
-    name: "Malappuram",
-    shortName: "MA"
-}, {
-    name: "Palakkad",
-    shortName: "PL"
-
-}, {
-    name: "Pathanamthitta",
-    shortName: "PT"
-
-}, {
-    name: "Thiruvananthapuram",
-    shortName: "TV"
-
-}, {
-    name: "Thrissur",
-    shortName: "TS"
-
-}, {
-    name: "Wayanad",
-    shortName: "WA"
-
-}];
+//service 
+import turfService from '../../../services/turfService';
 
 export default function DistrictList() {
+
+    const [districts , setDistrict] = useState();
+    //get all districts
+    useEffect(() => {
+        const getDistricts = async () => {
+          try {
+            // loaderToggler(true);
+            // get districts
+            const districts = await turfService.getDistricts();
+            console.log(districts)
+            setDistrict(districts);
+            // loaderToggler(false);
+          } catch (err) {
+            console.error(err?.response?.data?.message);
+            // loaderToggler(false);
+          }
+        };
+        getDistricts();
+      }, []);
     return (
         <Page title="District List">
             <Container>
@@ -79,19 +44,17 @@ export default function DistrictList() {
                     mb={2}
                 >
                     <Grid container spacing={3} rowSpacing={1} direction="row">
-                        {spots.map(spot => (
+                        {districts && districts.map(district => (
                             <Grid item xs={12} sm={6} md={3}>
                                 {DtTypeConfig.map((type) => (
                                     <DtCard
-                                        data={spot}
+                                        data={district}
                                         type={type}
                                     // onClick={handleClick}
                                     />
                                 ))}
                             </Grid>
                         ))}
-
-
                     </Grid>
                 </Stack>
             </Container>
