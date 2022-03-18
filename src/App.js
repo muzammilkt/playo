@@ -22,59 +22,56 @@ function App() {
   return (
     <ThemeConfig>
       <GlobalStyles />
-        {/* User profile provider */}
-        <ProfileProvider>
-          <Routes>
-            {/* Home routes (Dashboard) */}
-            <Route path="/app" element={<DashboardLayout />}>
-              <Route path="/app" element={<Navigate to="/app/home" />} />
-              <Route path="home" element={<Home />} />
-              
-  
-              {/* route for personal view */}
-              <Route path="personaldata">
-                <Route
-                  path="/app/personaldata"
-                  element={<Navigate to="/app/personaldata/view" />}
-                />
-                <Route path="view" element={<ViewPersonalDtls />} />
-                <Route path="addprofile" element={<AddPersonal />} />
-              </Route>
+      {/* User profile provider */}
+      <ProfileProvider>
+        <Routes>
+          {/* Home routes (Dashboard) */}
+          <Route path="/app" element={<DashboardLayout />}>
+            <Route path="/app" element={<Navigate to="/app/home" />} />
+            <Route path="home" element={<Home />} />
 
-               {/* route for spots view */}
-               <Route path="spots">
-                <Route
-                  path="/app/spots"
-                  element={<Navigate to="/app/spots/districtlist" />}
-                />
-                <Route path="turflist" element={<TurfList />} />
-                <Route path="addDetails" element={<AddTurfDetails />} />
-                <Route path="view" element={<ViewTurf />} />
-                <Route path="districtlist" element={<DistrictList />} />
-              </Route>
-
-              {/* route for time view */}
-              <Route path="time">
-                <Route
-                  path="/app/time"
-                  element={<Navigate to="/app/time/list" />}
-                />
-                <Route path="list" element={<TimeList />} />
-              </Route>
-
+            {/* route for personal view */}
+            <Route path="personaldata">
+              <Route
+                path="/app/personaldata"
+                element={<Navigate to="/app/personaldata/view" />}
+              />
+              <Route path="view" element={<ViewPersonalDtls />} />
+              <Route path="addprofile" element={<AddPersonal />} />
             </Route>
 
-            {/* user routes */}
-            <Route path="/user" element={<AuthLayout />}>
-              <Route path="register" element={<Register />} />
-              <Route path="login" element={<Login />} />
-              <Route path="forgot" element={<ForgotPassword />} />
-              <Route path="recover" element={<RecoverPassword />} />
+            {/* route for spots view */}
+            <Route path="spots">
+              <Route
+                path="/app/spots"
+                element={<Navigate to="/app/spots/districtlist" />}
+              />
+              <Route path="turflist" element={<TurfList />} />
+              <Route path="addDetails" element={<AddTurfDetails />} />
+              <Route path="view" element={<ViewTurf />} />
+              <Route path="districtlist" element={<DistrictList />} />
             </Route>
 
+            {/* route for time view */}
+            <Route path="time">
+              <Route
+                path="/app/time"
+                element={<Navigate to="/app/time/list" />}
+              />
+              <Route path="list" element={<TimeList />} />
+            </Route>
+          </Route>
 
-          </Routes>
-        </ProfileProvider>
+          {/* user routes */}
+          <Route path="/user" element={<AuthLayout />}>
+            <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
+            <Route path="forgot" element={<ForgotPassword />} />
+            <Route path="recover" element={<RecoverPassword />} />
+          </Route>
+          <Route path="/" element={<Navigate to="/user/login" />} />
+        </Routes>
+      </ProfileProvider>
     </ThemeConfig>
   );
 }

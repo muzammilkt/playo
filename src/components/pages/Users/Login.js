@@ -63,7 +63,7 @@ export default function Login() {
                 variant="subtitle2"
                 to="/user/register"
               >
-                Don’t have an account? Register
+                Register as a Turf Owner
               </Link>
             </Stack>
             <SubmitButton

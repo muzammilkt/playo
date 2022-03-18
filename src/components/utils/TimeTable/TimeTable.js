@@ -31,7 +31,7 @@ const rows = [
         booked: true
     },
     {
-        time: "!.00 pm to 2.00 pm",
+        time: "3.00 pm to 2.00 pm",
         booked: false
     }
 ];

@@ -15,24 +15,46 @@ import TextInput from '../../utils/Inputs/TextInput';
 import ImageUpload from '../../utils/Inputs/ImageUpload';
 // material icons
 import PublishIcon from "@mui/icons-material/Publish";
+import turfService from "../../../services/turfService";
 
 export default function AddPersonal() {
+
+  const { id } = useParams();
 
   const navigate = useNavigate();
 
   const [name, setName] = useState();
-  const [phoneNo, setPhoneNo] = useState();
+  const [phonenmbr, setPhonenmbr] = useState();
   const [email, setEmail] = useState();
   const [adress, setAddress] = useState();
   const [profileImage,setProfileImage] = useState();
+  const [personalDetails , setPersonalDetails] = useState();
 
-  //add data
+  //add personal data data
   const handleAddData = async () => {
     try {
-      // await departmentService.deleteDepartment(id);
-      navigate("/app/personaldata/view");
-    } catch (error) {
-      console.error(error.response)
+      // loaderToggler(true);
+      const personalData = {
+        personalDetails: {
+          profileImage,
+          name,
+          phonenmbr,
+          email,
+          adress,
+        },
+      };
+      // adding department to db
+      if (!id) {
+        await turfService.addPersonalDetails(personalData);
+      } else {
+        await turfService.updatePersonalDetails(id, personalData);
+      }
+      // clearing the form
+      navigate(`app/personaldata/view/${id}`);
+      // loaderToggler(false);
+    } catch (err) {
+      console.error(err.response);
+      // loaderToggler(false);
     }
   };
 
@@ -94,8 +116,8 @@ export default function AddPersonal() {
                 label="phone Number"
                 color="info"
                 fullWidth
-                textValue={phoneNo}
-                setTextValue={setPhoneNo}
+                textValue={phonenmbr}
+                setTextValue={setPhonenmbr}
 
               />
             </Grid>
@@ -134,7 +156,7 @@ export default function AddPersonal() {
             <span>
               <Tooltip
                 title={
-                  !name || !adress || !phoneNo || !email
+                  !name || !adress || !phonenmbr || !email
                     ? "fill the fields"
                     : "sumbit fields"
                 }
@@ -144,7 +166,7 @@ export default function AddPersonal() {
                   color="info"
                   appap
                   onClick={handleAddData}
-                  disabled={!name || !adress || !phoneNo || !email}
+                  disabled={!name || !adress || !phonenmbr || !email}
                   startIcon={<PublishIcon />}
                 >
                   Submit
