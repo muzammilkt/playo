@@ -25,6 +25,7 @@ import { set } from "date-fns";
 import turfService from "../../../services/turfService";
 
 export default function AddTurfDetails() {
+  const { id } = useParams();
   const navigate = useNavigate();
   //dropdown values
   const turfTypes = ["Mud", "Grass"];
@@ -41,7 +42,7 @@ export default function AddTurfDetails() {
   //to accept selected district
   const [district, setDistrict] = useState();
   //state for district list frm backend
-  const [districtData , setDistrictData] = useState();
+  const [districtData, setDistrictData] = useState();
 
   const districtChange = (e) => {
     setDistrict(e.target.value);
@@ -68,7 +69,7 @@ export default function AddTurfDetails() {
   const handleAddTurf = async () => {
     try {
       // await departmentService.deleteDepartment(id);
-      navigate("/app/spots/view");
+      navigate(`/app/spots/view/${id}`);
     } catch (error) {
       console.error(error.response);
     }

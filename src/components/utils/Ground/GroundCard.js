@@ -50,13 +50,20 @@ export default function GroundCard({ data, type }) {
           </Link> */}
         </Grid>
         <IconWrapperStyle>
-          {<ShortFormStyle>{data && data.shortName}</ShortFormStyle>}
+          {<ShortFormStyle>{data && data.img1}</ShortFormStyle>}
         </IconWrapperStyle>
-        <Typography variant="h5">{data && data.name}</Typography>
+        <Typography variant="h5">{data && data.turfname}</Typography>
         <Typography sx={{ mt: 4 }} variant="subtitle2">
           {data && data.place}
         </Typography>
-        <Typography variant="subtitle2">{data && data.phoneNo}</Typography>
+        <Typography variant="subtitle2">By:{data && data.ownername}</Typography>
+        <Typography variant="subtitle2">{data && data.ownernmbr}</Typography>
+        <Typography variant="h5">Location:  {data && data.post}</Typography>
+        <Typography variant="subtitle2">{data && data.address}</Typography>
+        <Typography variant="subtitle2">Size:{data && data.size}</Typography>
+        <Typography variant="subtitle2">Type:{data && data.type}</Typography>
+
+
         <Typography varient="body2">
           <Link to="../view"><ReadMoreIcon/></Link>
         </Typography>

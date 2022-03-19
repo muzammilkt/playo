@@ -1,40 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import { Box, Typography, Stack, Link, Card } from "@mui/material";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Box, Container, Typography, Stack, Link, Card } from "@mui/material";
+import { Link as RouterLink  , useNavigate } from "react-router-dom";
 import PasswordField from "./utils/PasswordField";
 import TextInput from "./utils/TextInput";
 import SubmitButton from "./utils/SubmitButton";
-import Page from "../../utils/Page";
-// import Loader from "../../utils/Loader";
-
-//importing the user service
 import authService from "../../../services/authService";
-import Login from "./Login";
 
-const ContentStyle = styled("div")(() => ({
+const ContentStyle = styled("div")(({ theme }) => ({
   maxWidth: 400,
   margin: "auto",
   display: "flex",
-  height: "80vh",
+  minHeight: "80vh",
   flexDirection: "column",
   justifyContent: "center",
   alignContent: "center",
+  padding: theme.spacing(12, 0),
 }));
 
-const userType = "user";
+const userType = "admin";
 
-export default function Register() {
-  const [username, setUsername] = useState();
+export default function OwnerRegister() {
+    const navigate = useNavigate();
+  // const [Type , setType] = useState();
+  const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [passwordError, setPasswordError] = useState();
   const [confirmPasswordError, setConfirmPasswordError] = useState();
-  const [authErrors, setAuthErrors] = useState();
-  const navigate = useNavigate();
-
-  const clearError = () => setAuthErrors("");
 
   const validatePasswordLength = () => {
     //password validation for min length
@@ -56,18 +50,12 @@ export default function Register() {
     return false;
   };
 
-  const clearForm = () => {
-    setUsername("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-  };
-
   const handleClick = async () => {
     const passwordLengthError = validatePasswordLength();
     const passwordMatchError = validatePasswordMatch();
     if (passwordLengthError || passwordMatchError) return;
-    const data = { name: username, email, password, userType };
+    // console.log(userName, email, password, confirmPassword);
+    const data = { name: userName, email, password, userType };
     try {
       const response = await authService.registerUser(data);
       console.log(response);
@@ -78,9 +66,8 @@ export default function Register() {
   };
 
   return (
-    <Page title="Register">
+    <Container>
       <ContentStyle>
-        {/* <Loader /> */}
         <Card sx={{ p: 3 }}>
           <Box sx={{ mb: 3 }}>
             <Typography variant="h3" gutterBottom textAlign="center">
@@ -91,31 +78,26 @@ export default function Register() {
             <TextInput
               label="User name"
               type="text"
-              value={username}
-              setValue={setUsername}
-              authErrors={authErrors}
+              value={userName}
+              setValue={setUserName}
             />
             <TextInput
               label="Email"
               type="email"
               value={email}
               setValue={setEmail}
-              authErrors={authErrors}
             />
             <PasswordField
               label="Password"
               value={password}
               setValue={setPassword}
               errorMessage={passwordError}
-              authErrors={authErrors}
             />
             <PasswordField
               label="Confirm Password"
               value={confirmPassword}
               setValue={setConfirmPassword}
               errorMessage={confirmPasswordError}
-              authErrors={authErrors}
-              showError
             />
             <Stack
               direction="row"
@@ -130,7 +112,7 @@ export default function Register() {
             <SubmitButton
               name="Register"
               disabled={
-                !username || !email || !password || !confirmPassword
+                !userName || !email || !password || !confirmPassword
                   ? true
                   : false
               }
@@ -139,6 +121,6 @@ export default function Register() {
           </Stack>
         </Card>
       </ContentStyle>
-    </Page>
+    </Container>
   );
 }

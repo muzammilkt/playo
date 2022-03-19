@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
@@ -16,8 +16,29 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea, CardActions } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
+import turfService from '../../../services/turfService';
 
 export default function ViewTurf() {
+    const {id} = useParams();
+    const [Turf,setTurf] = useState();
+
+//to get turf details
+useEffect(() => {
+    const getTurfDetails = async () => {
+      try {
+        // loaderToggler(true);
+        // get districts
+        const turfDetails = await turfService.getDistricts();
+        console.log(turfDetails)
+        setTurf(turfDetails);
+        // loaderToggler(false);
+      } catch (err) {
+        console.error(err?.response?.data?.message);
+        // loaderToggler(false);
+      }
+    };
+    getTurfDetails();
+  }, []);
     return (
         <div>
             <Page title="View Turf Details">

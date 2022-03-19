@@ -5,6 +5,7 @@ import ThemeConfig from "./theme";
 import GlobalStyles from "./theme/globalStyles";
 import Register from "./components/pages/Users/Register";
 import Login from "./components/pages/Users/Login";
+import OwnerRegister from "./components/pages/Users/OwnerRegister";
 import AuthLayout from "./components/utils/UserLayout/AuthLayout";
 import ForgotPassword from "./components/pages/Users/ForgotPassword";
 import RecoverPassword from "./components/pages/Users/RecoverPassword";
@@ -46,9 +47,9 @@ function App() {
                 path="/app/spots"
                 element={<Navigate to="/app/spots/districtlist" />}
               />
-              <Route path="turflist" element={<TurfList />} />
+              <Route path="turflist/:id" element={<TurfList />} />
               <Route path="addDetails" element={<AddTurfDetails />} />
-              <Route path="view" element={<ViewTurf />} />
+              <Route path="view/:id" element={<ViewTurf />} />
               <Route path="districtlist" element={<DistrictList />} />
             </Route>
 
@@ -68,6 +69,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="forgot" element={<ForgotPassword />} />
             <Route path="recover" element={<RecoverPassword />} />
+            <Route path="ownerregister" element={<OwnerRegister />} />
           </Route>
           <Route path="/" element={<Navigate to="/user/login" />} />
         </Routes>
