@@ -1,26 +1,32 @@
 import { id } from "date-fns/locale";
 import BackendService from "./BackendService";
 
-//to get all districts
+//get all districts
 const getDistricts = async () => {
   return BackendService.get(`districts/`);
 };
-//to get all turfs
+
+//add turf
+const AddTurfDetails = async (data) => {
+return BackendService.post(`turfs/` , data);
+};
+
+//get all turfs
 const getTurfs = async (id) => {
   return BackendService.get(`turfs/bydistrict/${id}`);
 };
 
-//to view turf
+//view turf
 const getTurfDetails = async (id) => {
 return BackendService.get(`turfs/${id}`);
 };
 
 //add personal details
-const addPersonalDetails = async () => {
-  return BackendService.post(`personalDetails/`);
+const addPersonalDetails = async (data) => {
+  return BackendService.post("personalDetails/" , data);
 };
 
-//to get personal details
+//get personal details
 const getPersonalDetails = async (id) => {
   return BackendService.get(`personalDetails/${id}`);
 };
@@ -37,6 +43,7 @@ const turfService = {
   addPersonalDetails,
   updatePersonalDetails,
   getTurfDetails,
+  AddTurfDetails
 
 };
 export default turfService;

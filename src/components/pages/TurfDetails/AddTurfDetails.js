@@ -65,13 +65,32 @@ export default function AddTurfDetails() {
   }, []);
   console.log(district);
 
+  //data
+
   //add turf
   const handleAddTurf = async () => {
+    const userId = localStorage.getItem("userId");
+
+    const TurfData = {
+      img1: turfImage1,
+      turfname: Name,
+      ownername: OwnerName,
+      ownernmbr: OwnerPhoneNo,
+      ownerId:userId,
+      district: district,
+      post: Post,
+      pinnumber: Pin,
+      type: TurfType,
+      size: TurfSize,
+      discription: Discription,
+    };
     try {
-      // await departmentService.deleteDepartment(id);
-      navigate(`/app/spots/view/${id}`);
-    } catch (error) {
-      console.error(error.response);
+      const response = await turfService.AddTurfDetails(TurfData);
+      console.log(response);
+      localStorage.setItem("turfId",response._id);
+      navigate(`/app/spots/view/${response._id}`);
+    } catch (err) {
+      console.error(err.message);
     }
   };
 
@@ -262,7 +281,6 @@ export default function AddTurfDetails() {
                     !district ||
                     !Post ||
                     !Pin ||
-                    !turfImage1 ||
                     !TurfType ||
                     !TurfSize ||
                     !Discription

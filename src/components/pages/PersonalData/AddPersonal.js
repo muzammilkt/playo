@@ -11,15 +11,15 @@ import {
   Button,
 } from "@mui/material";
 //components
-import TextInput from '../../utils/Inputs/TextInput';
-import ImageUpload from '../../utils/Inputs/ImageUpload';
+import TextInput from "../../utils/Inputs/TextInput";
+import ImageUpload from "../../utils/Inputs/ImageUpload";
 // material icons
 import PublishIcon from "@mui/icons-material/Publish";
 import turfService from "../../../services/turfService";
 
 export default function AddPersonal() {
-
-  const { id } = useParams();
+  const userId = localStorage.getItem("userId");
+  const { id } = userId;
 
   const navigate = useNavigate();
 
@@ -27,30 +27,27 @@ export default function AddPersonal() {
   const [phonenmbr, setPhonenmbr] = useState();
   const [email, setEmail] = useState();
   const [adress, setAddress] = useState();
-  const [profileImage,setProfileImage] = useState();
-  const [personalDetails , setPersonalDetails] = useState();
+  const [profileImage, setProfileImage] = useState();
+  const [personalDetails, setPersonalDetails] = useState();
 
   //add personal data data
   const handleAddData = async () => {
+    const userid = localStorage.getItem("userId");
+    console.log(userid);
     try {
       // loaderToggler(true);
       const personalData = {
-        personalDetails: {
-          profileImage,
-          name,
-          phonenmbr,
-          email,
-          adress,
-        },
+        profileimage: profileImage,
+        userid,
+        name,
+        phonenmbr,
+        email,
+        address:adress,
       };
-      // adding department to db
-      if (!id) {
-        await turfService.addPersonalDetails(personalData);
-      } else {
-        await turfService.updatePersonalDetails(id, personalData);
-      }
-      // clearing the form
-      navigate(`app/personaldata/view/${id}`);
+      // adding personal details to db
+      const response = await turfService.addPersonalDetails(personalData);
+      console.log(response);
+      navigate(`../view/${response._id}`);
       // loaderToggler(false);
     } catch (err) {
       console.error(err.response);
@@ -72,29 +69,29 @@ export default function AddPersonal() {
           </Typography>
         </Stack>
         <Card sx={{ padding: 3, marginBottom: 2 }}>
-        <Grid xs={12} sm={6} md={6}>
-              <Grid
-                container
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-                xs={12}
-                sm={12}
-                md={12}
-                lg={12}
-              >
-                <ImageUpload image={profileImage} setImage={setProfileImage} />
-                {profileImage === "" && (
-                  <Typography sx={{ mt: 2 }} variant="body2" color="error">
-                    Profile image is required
-                  </Typography>
-                )}
-                <Typography sx={{ mt: 2, color: "gray" }} variant={"body2"}>
-                  Allowed *.jpeg, *.jpg, *.png, *.gif <br />
-                  max size: 1MB
+          <Grid xs={12} sm={6} md={6}>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              xs={12}
+              sm={12}
+              md={12}
+              lg={12}
+            >
+              <ImageUpload image={profileImage} setImage={setProfileImage} />
+              {profileImage === "" && (
+                <Typography sx={{ mt: 2 }} variant="body2" color="error">
+                  Profile image is required
                 </Typography>
-              </Grid>
+              )}
+              <Typography sx={{ mt: 2, color: "gray" }} variant={"body2"}>
+                Allowed *.jpeg, *.jpg, *.png, *.gif <br />
+                max size: 1MB
+              </Typography>
             </Grid>
+          </Grid>
           <Grid container spacing={1} rowSpacing={1}>
             <Grid item xs={12} sm={6} md={6}>
               <TextInput
@@ -105,8 +102,6 @@ export default function AddPersonal() {
                 fullWidth
                 textValue={name}
                 setTextValue={setName}
-
-
               />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
@@ -118,7 +113,6 @@ export default function AddPersonal() {
                 fullWidth
                 textValue={phonenmbr}
                 setTextValue={setPhonenmbr}
-
               />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
@@ -130,7 +124,6 @@ export default function AddPersonal() {
                 fullWidth
                 textValue={email}
                 setTextValue={setEmail}
-
               />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
@@ -142,9 +135,7 @@ export default function AddPersonal() {
                 fullWidth
                 textValue={adress}
                 setTextValue={setAddress}
-
               />
-
             </Grid>
           </Grid>
           <Stack
@@ -177,5 +168,5 @@ export default function AddPersonal() {
         </Card>
       </Container>
     </Page>
-  )
-};
+  );
+}

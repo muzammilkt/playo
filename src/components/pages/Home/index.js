@@ -2,6 +2,7 @@ import Page from "../../utils/Page";
 import UsersCard from "./UsersCard";
 import { Container, Box, Typography, Grid } from "@mui/material";
 import UserTypeConfig from "./UserTypeConfig";
+const userId = localStorage.getItem("userId");
 
 const Home = () => {
   return (

@@ -58,6 +58,7 @@ export default function Login() {
       // console.log(response.token)
       //storing token in localStorage
       localStorage.setItem(LOCAL_KEYS.AUTH_TOKEN, response.token);
+      localStorage.setItem("userId",response._id)
       redirectionHandler(response.userType, response.status);
       
       // loaderToggler(false);

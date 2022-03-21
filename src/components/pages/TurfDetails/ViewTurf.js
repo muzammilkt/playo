@@ -18,8 +18,12 @@ import { CardActionArea, CardActions } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
 import turfService from '../../../services/turfService';
 
+//taking userId from localstorage
+const userId = localStorage.getItem("userId");
+// console.log(userId);
+
 export default function ViewTurf() {
-    const {id} = useParams();
+    // const {id} = useParams();
     const [Turf,setTurf] = useState();
 
 //to get turf details
@@ -28,7 +32,7 @@ useEffect(() => {
       try {
         // loaderToggler(true);
         // get districts
-        const turfDetails = await turfService.getDistricts();
+        const turfDetails = await turfService.getTurfDetails(userId);
         console.log(turfDetails)
         setTurf(turfDetails);
         // loaderToggler(false);
@@ -39,6 +43,7 @@ useEffect(() => {
     };
     getTurfDetails();
   }, []);
+
     return (
         <div>
             <Page title="View Turf Details">

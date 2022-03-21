@@ -35,7 +35,7 @@ function App() {
             <Route path="personaldata">
               <Route
                 path="/app/personaldata"
-                element={<Navigate to="/app/personaldata/view" />}
+                element={<Navigate to="/app/personaldata/view/" />}
               />
               <Route path="view" element={<ViewPersonalDtls />} />
               <Route path="addprofile" element={<AddPersonal />} />
@@ -49,7 +49,7 @@ function App() {
               />
               <Route path="turflist/:id" element={<TurfList />} />
               <Route path="addDetails" element={<AddTurfDetails />} />
-              <Route path="view/:id" element={<ViewTurf />} />
+              <Route path="view" element={<ViewTurf />} />
               <Route path="districtlist" element={<DistrictList />} />
             </Route>
 
