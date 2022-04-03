@@ -19,12 +19,17 @@ import SelectInput from "../../utils/Inputs/SelectInput";
 
 // material icons
 import PublishIcon from "@mui/icons-material/Publish";
-import { set } from "date-fns";
 
 //service
 import turfService from "../../../services/turfService";
 
+//loader
+import { loadingContext } from "../../../context/loadingContext";
+import Loader from "../../utils/Loader";
+
 export default function AddTurfDetails() {
+  const { loaderToggler } = useContext(loadingContext);
+
   const { id } = useParams();
   const navigate = useNavigate();
   //dropdown values
@@ -41,42 +46,71 @@ export default function AddTurfDetails() {
   const [TurfSize, setTurfSize] = useState();
   //to accept selected district
   const [district, setDistrict] = useState();
-  //state for district list frm backend
+  //state for district list from backend
   const [districtData, setDistrictData] = useState();
+
+  //setState function for setting data for editing
+  function setState(data) {
+    setTurfImage1();
+    setName(data.turfname);
+    setOwnerName(data.ownername);
+    setOwnerPhoneNo(data.ownernmbr);
+    setPost(data.post);
+    setPin(data.pinnumber);
+    setDiscription(data.discription);
+    setTurfSize(data.size);
+    setTurfType(data.type);
+  }
 
   const districtChange = (e) => {
     setDistrict(e.target.value);
   };
-  //get all districts
+
+  //get all districts for dropdown
   useEffect(() => {
     const getDistricts = async () => {
       try {
-        // loaderToggler(true);
+        loaderToggler(true);
         // get districts
         const districtsList = await turfService.getDistricts();
         setDistrictData(districtsList);
-        // loaderToggler(false);
+        loaderToggler(false);
       } catch (err) {
         console.error(err?.response?.data?.message);
-        // loaderToggler(false);
+        loaderToggler(false);
       }
     };
     getDistricts();
   }, []);
-  console.log(district);
 
-  //data
+  //data for editing
+  useEffect(() => {
+    const getTurfData = async () => {
+      try {
+        loaderToggler(true);
+        // get turfData
+        const TurfData = await turfService.getTurfDetailsById(id);
+        setState(TurfData);
+        console.log(TurfData);
+        loaderToggler(false);
+      } catch (err) {
+        console.error(err?.response?.data?.message);
+        loaderToggler(false);
+      }
+    };
+    getTurfData();
+  }, []);
 
   //add turf
   const handleAddTurf = async () => {
-    const userId = localStorage.getItem("userId");
+    const ownerid = localStorage.getItem("userId");
 
     const TurfData = {
       img1: turfImage1,
       turfname: Name,
       ownername: OwnerName,
       ownernmbr: OwnerPhoneNo,
-      ownerId:userId,
+      ownerid,
       district: district,
       post: Post,
       pinnumber: Pin,
@@ -85,18 +119,29 @@ export default function AddTurfDetails() {
       discription: Discription,
     };
     try {
-      const response = await turfService.AddTurfDetails(TurfData);
-      console.log(response);
-      localStorage.setItem("turfId",response._id);
-      navigate(`/app/spots/view/${response._id}`);
+      loaderToggler(true);
+      if (!id) {
+        const response = await turfService.AddTurfDetails(TurfData);
+        localStorage.setItem("turfId", response._id);
+        navigate(`/app/spots/view/`);
+        loaderToggler(false);
+      } else {
+        loaderToggler(true);
+        const updatedData = await turfService.EditTurfDetails(TurfData);
+        navigate(`/app/spots/view/${updatedData._id}`);
+        loaderToggler(false);
+      }
+      // console.log(response);
     } catch (err) {
       console.error(err.message);
+      loaderToggler(false);
     }
   };
 
   return (
     <Page title="Add Turf Details">
       <Container>
+        <Loader />
         <Stack
           direction="row"
           alignItems="left"

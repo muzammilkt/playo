@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState , useEffect , useContext} from 'react';
 import Page from "../../utils/Page";
 import DtCard from '../../utils/District/DtCard';
 import DtTypeConfig from '../../utils/District/DtTypeConfig';
@@ -10,23 +10,28 @@ import {
 } from "@mui/material";
 //service 
 import turfService from '../../../services/turfService';
+//loader
+import { loadingContext } from '../../../context/loadingContext';
+import Loader from '../../utils/Loader';
 
 export default function DistrictList() {
+
+    const { loaderToggler } = useContext(loadingContext);
 
     const [districts , setDistrict] = useState();
     //get all districts
     useEffect(() => {
         const getDistricts = async () => {
           try {
-            // loaderToggler(true);
+            loaderToggler(true);
             // get districts
             const districts = await turfService.getDistricts();
             console.log(districts)
             setDistrict(districts);
-            // loaderToggler(false);
+            loaderToggler(false);
           } catch (err) {
             console.error(err?.response?.data?.message);
-            // loaderToggler(false);
+            loaderToggler(false);
           }
         };
         getDistricts();
@@ -34,6 +39,7 @@ export default function DistrictList() {
     return (
         <Page title="District List">
             <Container>
+                <Loader/>
                 <Typography variant="h5" gutterBottom>
                     District List
                 </Typography>

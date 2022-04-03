@@ -1,7 +1,7 @@
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-import ReadMoreIcon from '@mui/icons-material/ReadMore';
+import ReadMoreIcon from "@mui/icons-material/ReadMore";
 
 export default function GroundCard({ data, type }) {
   // const deleteDepartment = () => {
@@ -36,7 +36,7 @@ export default function GroundCard({ data, type }) {
     textTransform: "uppercase",
   }));
   return (
-    <Link to="/app/time/list" style={{ textDecoration: "none" }}>
+    <Link to={`/app/time/listforbooking/${data._id}`} style={{ textDecoration: "none" }}>
       <RootStyle>
         <Grid
           container
@@ -44,7 +44,6 @@ export default function GroundCard({ data, type }) {
           justifyContent="flex-end"
           alignItems="center"
         >
-
           {/* <Link to={`/app/department/edit/${data._id}`} style={{ color: "none" }}>
             <ModeEditOutlineOutlinedIcon sx={{ margin: "8px", opacity: "0.5", height: "3vh", width: "2vw" }} />
           </Link> */}
@@ -58,14 +57,14 @@ export default function GroundCard({ data, type }) {
         </Typography>
         <Typography variant="subtitle2">By:{data && data.ownername}</Typography>
         <Typography variant="subtitle2">{data && data.ownernmbr}</Typography>
-        <Typography variant="h5">Location:  {data && data.post}</Typography>
+        <Typography variant="h5">Location: {data && data.post}</Typography>
         <Typography variant="subtitle2">{data && data.address}</Typography>
         <Typography variant="subtitle2">Size:{data && data.size}</Typography>
         <Typography variant="subtitle2">Type:{data && data.type}</Typography>
-
-
         <Typography varient="body2">
-          <Link to="../view"><ReadMoreIcon/></Link>
+          <Link to={`../viewby/${data._id}`}>
+            <ReadMoreIcon />
+          </Link>
         </Typography>
       </RootStyle>
     </Link>

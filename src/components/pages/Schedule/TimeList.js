@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState , useContext} from 'react'
 import Page from "../../utils/Page";
 import {
     Stack,
@@ -7,12 +7,16 @@ import {
     Grid,
 } from "@mui/material";
 import TimeTable from "../../utils/TimeTable/TimeTable";
-
+//loader
+import { loadingContext } from '../../../context/loadingContext';
+import Loader from '../../utils/Loader';
 
 export default function TimeList() {
+    const { loaderToggler } = useContext(loadingContext);
     return (
         <Page title="Time List">
             <Container>
+                <Loader/>
                 <Stack
                     direction="row"
                     alignItems="left"

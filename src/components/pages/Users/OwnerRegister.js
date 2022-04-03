@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect , useContext} from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Container, Typography, Stack, Link, Card } from "@mui/material";
-import { Link as RouterLink  , useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import PasswordField from "./utils/PasswordField";
 import TextInput from "./utils/TextInput";
 import SubmitButton from "./utils/SubmitButton";
 import authService from "../../../services/authService";
+//loader
+import { loadingContext } from "../../../context/loadingContext";
+import Loader from "../../utils/Loader";
 
 const ContentStyle = styled("div")(({ theme }) => ({
   maxWidth: 400,
@@ -21,7 +24,9 @@ const ContentStyle = styled("div")(({ theme }) => ({
 const userType = "admin";
 
 export default function OwnerRegister() {
-    const navigate = useNavigate();
+  const { loaderToggler } = useContext(loadingContext);
+
+  const navigate = useNavigate();
   // const [Type , setType] = useState();
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
@@ -57,16 +62,20 @@ export default function OwnerRegister() {
     // console.log(userName, email, password, confirmPassword);
     const data = { name: userName, email, password, userType };
     try {
+      loaderToggler(true);
       const response = await authService.registerUser(data);
       console.log(response);
       navigate("../login");
+      loaderToggler(false);
     } catch (err) {
       console.log(err.message);
+      loaderToggler(false);
     }
   };
 
   return (
     <Container>
+      <Loader/>
       <ContentStyle>
         <Card sx={{ p: 3 }}>
           <Box sx={{ mb: 3 }}>

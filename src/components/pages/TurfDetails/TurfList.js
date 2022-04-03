@@ -1,4 +1,4 @@
-import React , {useEffect , useState} from "react";
+import React , {useEffect , useState , useContext} from "react";
 import Page from "../../utils/Page";
 import GroundCard from "../../utils/Ground/GroundCard";
 import GrdTypeConfig from "../../utils/Ground/GrdTypeConfig";
@@ -6,37 +6,28 @@ import { Stack, Container, Typography, Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 //service
 import turfService from "../../../services/turfService";
-// const spots = [
-//   {
-//     name: "marena",
-//     place: "kumminipparmb",
-//     phoneNo: "545345643",
-//     shortName: "ma",
-//   },
-//   {
-//     name: "killadi",
-//     place: "pallikkal",
-//     phoneNo: "6587563",
-//     shortName: "kd",
-//   },
-// ];
+//loader
+import { loadingContext } from "../../../context/loadingContext";
+import Loader from "../../utils/Loader";
 
 export default function TurfList() {
+  const { loaderToggler } = useContext(loadingContext);
+
   const [spots , setSpots] = useState();
   //get id of district
   const { id } = useParams();
   useEffect(() => {
     const getTurfs = async () => {
       try {
-        // loaderToggler(true);
+        loaderToggler(true);
         // get districts
         const turfs = await turfService.getTurfs(id);
         console.log(turfs)
         setSpots(turfs);
-        // loaderToggler(false);
+        loaderToggler(false);
       } catch (err) {
         console.error(err?.response?.data?.message);
-        // loaderToggler(false);
+        loaderToggler(false);
       }
     };
     getTurfs();
@@ -45,6 +36,7 @@ export default function TurfList() {
   return (
     <Page title="Spot List">
       <Container>
+        <Loader/>
         <Stack
           direction="row"
           alignItems="left"

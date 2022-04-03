@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-
+import { useRef, useState  } from "react";
+import { useNavigate } from "react-router-dom";
 // material icons 
 // import HomeIcon from '@mui/icons-material/Home';
 // import PersonIcon from '@mui/icons-material/Person';
@@ -32,12 +32,20 @@ import avatar from '../../../images/avatar.jpg'
 
 
 export default function AccountPopover() {
+  const navigate = useNavigate();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
   // handle account popover open
   const handleOpen = () => {
     setOpen(true);
+  };
+
+  //handle logout
+  const HandleLogout = () => {
+      localStorage.clear();
+      navigate("../user/login");
+      
   };
 
   //handle account popover close
@@ -86,31 +94,10 @@ export default function AccountPopover() {
         </Box>
 
         <Divider sx={{ my: 1 }} />
-
-        {/* {MENU_OPTIONS.map((option) => (
-          <MenuItem
-            key={option.label}
-            to={option.linkTo}
-            component={RouterLink}
-            onClick={handleClose}
-            sx={{ typography: "body2", py: 1, px: 2.5 }}
-          >
-            <Box
-              // component={Icon}
-              icon={option.icon}
-              sx={{
-                mr: 2,
-                width: 24,
-                height: 24,
-              }}
-            />
-
-            {option.label}
-          </MenuItem>
-        ))} */}
+        
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button fullWidth color="inherit" variant="outlined" onClick={HandleLogout}>
             Logout
           </Button>
         </Box>

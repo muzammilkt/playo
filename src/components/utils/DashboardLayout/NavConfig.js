@@ -20,11 +20,11 @@ const NavConfig = [
     path: "/app/spots",
     icon: SportsSoccerIcon,
   },
-  {
-    title:"Slot Status",
-    path:"/app/time",
-    icon:DateRangeIcon,
-  },
+  // {
+  //   title:"Slot Status",
+  //   path:"/app/time",
+  //   icon:DateRangeIcon,
+  // },
   {
     title: "Turf Details",
     path: "/app/spots/view",

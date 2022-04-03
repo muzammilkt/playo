@@ -11,10 +11,8 @@ import authService from "../../../services/authService";
 //constants
 import LOCAL_KEYS from "../../../constants/LOCAL_KEY";
 //context
-// import Page from "../../utils/Page";
-import { id } from "date-fns/locale";
-// import { loadingContext } from "../../../context/loadingContext";
-// import Loader from "../../utils/Loader";
+import { loadingContext } from "../../../context/loadingContext";
+import Loader from "../../utils/Loader";
 const ContentStyle = styled("div")(({ theme }) => ({
   maxWidth: 400,
   margin: "auto",
@@ -25,6 +23,9 @@ const ContentStyle = styled("div")(({ theme }) => ({
 }));
 
 export default function Login() {
+
+  const { loaderToggler } = useContext(loadingContext);
+
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -34,20 +35,22 @@ export default function Login() {
 
   const redirectionHandler = (type, status) => {
     console.log(type,status);
-    // if (type === "user") return navigate("/app/home");
+    const userId = localStorage.getItem("userId");
     if (type === "admin" && status === "filled") {
-      return navigate(`/app/spots/view/${id}`);
+      return navigate(`/app/spots/view`);
     } else if (type === "admin") {
       return navigate("/app/spots/addDetails");
     }
     if (type === "user" && status === "filled") {
-      return navigate(`/app/personaldata/view`);
+      return navigate(`/app/personaldata/view/me`);
+    }else if(type ==="user"){
+      return navigate("/app/personaldata/addprofile")
     }
   };
   const handleClick = async () => {
     try {
       clearError();
-      // loaderToggler(true);
+      loaderToggler(true);
       const data = {
         email,
         password,
@@ -61,16 +64,17 @@ export default function Login() {
       localStorage.setItem("userId",response._id)
       redirectionHandler(response.userType, response.status);
       
-      // loaderToggler(false);
+      loaderToggler(false);
     } catch (err) {
       console.log(err);
       setAuthErrors(err?.response?.data?.message);
-      // loaderToggler(false);
+      loaderToggler(false);
     }
   };
 
   return (
     <Container>
+      <Loader/>
       <ContentStyle>
         <Card sx={{ p: 3 }}>
           <Box sx={{ mb: 3 }}>

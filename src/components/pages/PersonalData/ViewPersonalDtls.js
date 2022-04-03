@@ -1,4 +1,5 @@
-import {useEffect , useState} from "react";
+import {useEffect , useState } from "react";
+import { useContext } from "react";
 import Page from "../../utils/Page";
 import { Link, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -10,25 +11,32 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea, CardActions } from "@mui/material";
 //service
 import turfService from "../../../services/turfService";
+//loader
+import { loadingContext } from "../../../context/loadingContext";
+import Loader from "../../utils/Loader";
+import { id } from "date-fns/locale";
 
 //taking userId from localstorage
 const userId = localStorage.getItem("userId");
 
 export default function ViewPersonalDtls() {
+
+  const { loaderToggler } = useContext(loadingContext);
+
   const[PersonalData , setPersonalData]  =useState();
   //to get personal details
 useEffect(() => {
   const getPersonalDetails = async () => {
     try {
-      // loaderToggler(true);
+      loaderToggler(true);
       // get personal data
       const PersonalDetails = await turfService.getPersonalDetails(userId);
       console.log(PersonalDetails);
       setPersonalData(PersonalDetails);
-      // loaderToggler(false);
+      loaderToggler(false);
     } catch (err) {
       console.error(err?.response?.data?.message);
-      // loaderToggler(false);
+      loaderToggler(false);
     }
   };
   getPersonalDetails();
@@ -37,6 +45,7 @@ useEffect(() => {
   return (
     <Page title="View Personal Data">
       <Container>
+        <Loader/>
         <Stack
           direction="row"
           alignItems="left"
@@ -53,6 +62,7 @@ useEffect(() => {
           </Link>
         </Stack>
         <Grid>
+        {PersonalData && PersonalData.map((data) => (
           <Card sx={{ maxWidth: 300 }}>
             <CardActionArea>
               <CardMedia
@@ -63,27 +73,28 @@ useEffect(() => {
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  muzammil
+                  {data.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  9567167713
+                  {data.phonenmbr}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  muzammil@gmail.com
+                  {data.email}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  anthekkad(h),kumminipparamb(po), malappuram(dt),kerala st
+                  {data.address}
                 </Typography>
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Link to={`../addprofile/`}>
+              <Link to={`../edit/${data._id}`}>
               <Button size="small" color="primary">
                 edit
               </Button>
               </Link>
             </CardActions>
           </Card>
+        ))}
         </Grid>
       </Container>
     </Page>

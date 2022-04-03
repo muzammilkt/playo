@@ -16,48 +16,87 @@ import ImageUpload from "../../utils/Inputs/ImageUpload";
 // material icons
 import PublishIcon from "@mui/icons-material/Publish";
 import turfService from "../../../services/turfService";
+//loader
+import { loadingContext } from "../../../context/loadingContext";
+import Loader from "../../utils/Loader";
+
+//taking userId from localstorage
+const userId = localStorage.getItem("userId");
 
 export default function AddPersonal() {
-  const userId = localStorage.getItem("userId");
-  const { id } = userId;
-
+  const { id } = useParams();
+  const { loaderToggler } = useContext(loadingContext);
   const navigate = useNavigate();
-
   const [name, setName] = useState();
   const [phonenmbr, setPhonenmbr] = useState();
   const [email, setEmail] = useState();
   const [adress, setAddress] = useState();
   const [profileImage, setProfileImage] = useState();
-  const [personalDetails, setPersonalDetails] = useState();
+  // const [personalDetails, setPersonalDetails] = useState();
+  //setState function
+  function setState(data) {
+    setName(data.name);
+    setPhonenmbr(data.phonenmbr);
+    setEmail(data.email);
+    setAddress(data.address);
+  }
+
+  //get personal details for editing by userId
+  useEffect(() => {
+    const getPersonalData = async () => {
+      try {
+        loaderToggler(true);
+        // get  personal details
+        const details = await turfService.getPersonalDetails(userId);
+        setState(details);
+        console.log(details);
+        loaderToggler(false);
+      } catch (err) {
+        console.error(err?.response?.data?.message);
+        loaderToggler(false);
+      }
+    };
+    getPersonalData();
+  }, []);
 
   //add personal data data
   const handleAddData = async () => {
-    const userid = localStorage.getItem("userId");
-    console.log(userid);
+    console.log(userId);
     try {
-      // loaderToggler(true);
+      loaderToggler(true);
       const personalData = {
         profileimage: profileImage,
-        userid,
+        userid: userId,
         name,
         phonenmbr,
         email,
-        address:adress,
+        address: adress,
       };
-      // adding personal details to db
-      const response = await turfService.addPersonalDetails(personalData);
-      console.log(response);
-      navigate(`../view/${response._id}`);
-      // loaderToggler(false);
+      if (!id) {
+        // adding personal details to db
+        const response = await turfService.addPersonalDetails(personalData);
+        // console.log(response);
+        navigate(`../view/`);
+        loaderToggler(false);
+      } else {
+        const updateResponse = await turfService.editPersonalDetails(
+          id,
+          personalData
+        );
+        console.log(updateResponse);
+        navigate(`../view/`);
+        loaderToggler(false);
+      }
     } catch (err) {
-      console.error(err.response);
-      // loaderToggler(false);
+      console.error(err.message);
+      loaderToggler(false);
     }
   };
 
   return (
     <Page title="Add Personal Data">
       <Container>
+        <Loader />
         <Stack
           direction="row"
           alignItems="left"

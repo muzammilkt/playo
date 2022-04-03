@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useContext } from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Typography, Stack, Link, Card } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -6,7 +6,9 @@ import PasswordField from "./utils/PasswordField";
 import TextInput from "./utils/TextInput";
 import SubmitButton from "./utils/SubmitButton";
 import Page from "../../utils/Page";
-// import Loader from "../../utils/Loader";
+//loader
+import Loader from "../../utils/Loader";
+import { loadingContext } from "../../../context/loadingContext";
 
 //importing the user service
 import authService from "../../../services/authService";
@@ -24,7 +26,8 @@ const ContentStyle = styled("div")(() => ({
 
 const userType = "user";
 
-export default function Register() {
+export default function UserRegister() {
+  const { loaderToggler } = useContext(loadingContext);
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -69,11 +72,14 @@ export default function Register() {
     if (passwordLengthError || passwordMatchError) return;
     const data = { name: username, email, password, userType };
     try {
+      loaderToggler(true);
       const response = await authService.registerUser(data);
       console.log(response);
       navigate("../login");
+      loaderToggler(false);
     } catch (err) {
       console.log(err.message);
+      loaderToggler(false);
     }
   };
 
