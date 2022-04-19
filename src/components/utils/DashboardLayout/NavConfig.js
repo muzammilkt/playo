@@ -1,15 +1,10 @@
 import PieChartIcon from "@mui/icons-material/PieChart";
 import FaceIcon from "@mui/icons-material/Face";
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import DateRangeIcon from '@mui/icons-material/DateRange';
+import ViewListIcon from '@mui/icons-material/ViewList';
 import ArticleIcon from '@mui/icons-material/Article';
 //nav bar options
 const NavConfig = [
-  {
-    title: "Home",
-    path: "/app/home",
-    icon: PieChartIcon,
-  },
   {
     title: "Profile",
     path: "/app/personaldata",
@@ -20,16 +15,10 @@ const NavConfig = [
     path: "/app/spots",
     icon: SportsSoccerIcon,
   },
-  // {
-  //   title:"Slot Status",
-  //   path:"/app/time",
-  //   icon:DateRangeIcon,
-  // },
   {
     title: "Turf Details",
     path: "/app/spots/view",
-    icon: ArticleIcon
-    ,
+    icon: ArticleIcon,
   },
 ];
 

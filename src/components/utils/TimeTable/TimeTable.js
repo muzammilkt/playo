@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState , useContext } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -15,53 +15,55 @@ import {
   Button,
   Card,
 } from "@mui/material";
+//loader
+import { loadingContext } from "../../../context/loadingContext";
+import Loader from "../../utils/Loader";
 // import { getTimeSlots } from "../../../services/timeSlotService";
 import TimeSlotService from "../../../services/timeSlotService";
 
-const rows = [
-  {
-    time: "1.00 pm to 2.00 pm",
-    booked: true,
-  },
-  {
-    time: "2.00 pm to 3.00 pm",
-    booked: false,
-  },
-  {
-    time: "1.00 pm to 2.00 pm",
-    booked: true,
-  },
-  {
-    time: "3.00 pm to 2.00 pm",
-    booked: false,
-  },
-];
-
 export default function TimeTable() {
+  const { loaderToggler } = useContext(loadingContext);
+
   const navigate = useNavigate();
   const { id } = useParams();
   const [timeSlots, setTimeSlots] = useState();
 
   useEffect(() => {
     try {
+      loaderToggler(true);
       async function getTimeSlots() {
         const res = await TimeSlotService.getTimeSlots(id);
         console.log(res);
         setTimeSlots(res);
       }
       getTimeSlots();
+      loaderToggler(false);
+      // navigate(`listforbooking/${id}`);
     } catch (err) {
       console.log(err.message);
+      loaderToggler(false);
     }
   }, []);
 
   //handle button for booking
-  const handleBook = async () => {
+  const handleBook = async (event , id) => {
     try {
-      // await departmentService.deleteDepartment(id);
-      navigate("/app/time/list");
+      loaderToggler(true);
+      const slotId = event.target.id;
+      console.log(slotId);
+      const userId = localStorage.getItem("userId");
+      const turfId = id;
+      const data={
+        userId,
+        turfId,
+        // slotId
+      };
+      // const booking = await TimeSlotService.bookSlot(data);
+      // navigate("/app/time/list");
+      loaderToggler(false);
     } catch (error) {
       console.error(error.response);
+      loaderToggler(false);
     }
   };
 
@@ -87,7 +89,7 @@ export default function TimeTable() {
                     color="success"
                     disabled={row.booked ? "true" : ""}
                     variant="contained"
-                    onClick={handleBook}
+                    onClick={(e) => handleBook(e,row._id)}
                   >
                     {row.booked ? "Booked" : "Book Now"}
                   </Button>

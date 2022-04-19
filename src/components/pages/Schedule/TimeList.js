@@ -16,6 +16,7 @@ export default function TimeList() {
     return (
         <Page title="Time List">
             <Container>
+            <Loader/>
                 <Loader/>
                 <Stack
                     direction="row"

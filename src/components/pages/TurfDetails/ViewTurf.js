@@ -22,10 +22,6 @@ import turfService from "../../../services/turfService";
 import { loadingContext } from "../../../context/loadingContext";
 import Loader from "../../utils/Loader";
 
-//taking userId from localstorage
-const userId = localStorage.getItem("userId");
-// console.log(userId);
-
 export default function ViewTurf() {
   // const { id } = useParams();
   const { loaderToggler } = useContext(loadingContext);
@@ -35,10 +31,13 @@ export default function ViewTurf() {
   useEffect(() => {
     const getTurfDetails = async () => {
       try {
+        //taking userId from localstorage
+        const userId = localStorage.getItem("userId");
+        // console.log(userId);
         loaderToggler(true);
         // get turflist for owner
         const turfDetails = await turfService.getTurfDetails(userId);
-        console.log(turfDetails);
+        // console.log(turfDetails);
         setTurfs(turfDetails);
         loaderToggler(false);
       } catch (err) {
@@ -78,7 +77,7 @@ export default function ViewTurf() {
           <Grid>
             {Turfs &&
               Turfs.map((turf) => (
-                <Link to={`../../time/listforowner/${turf._id}`}>
+                <Link to={`../../bookedby/userList/${turf._id}`}>
                   <Card sx={{ maxWidth: 300 }}>
                     <Grid
                       container

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 // material UI components
 import {
@@ -115,6 +116,9 @@ export default function DataTable({ TABLE_HEAD, TABLE_DATA, SEARCH_ID }) {
     switch (type) {
       case "text":
         return value[col.id];
+        case "button":
+          return (<DeleteIcon/>)
+          case "card":
       case "stack":
         return (
           <Stack

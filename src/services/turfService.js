@@ -8,11 +8,11 @@ const getDistricts = async () => {
 
 //add turf
 const AddTurfDetails = async (data) => {
-return BackendService.post(`turfs/` , data);
+  return BackendService.post(`turfs/`, data);
 };
 
 //edit turf details
-const EditTurfDetails = async(id) => {
+const EditTurfDetails = async (id) => {
   return BackendService.patch(`turfs/${id}`);
 };
 
@@ -23,18 +23,13 @@ const getTurfs = async (id) => {
 
 //view turf by owner id
 const getTurfDetails = async (id) => {
-return BackendService.get(`turfs/byuser/${id}`);
+  return BackendService.get(`turfs/byuser/${id}`);
 };
 
-//get turf data by turf id for editing
+//get turf details data by turf id for editing
 const getTurfDetailsById = async (id) => {
   return BackendService.get(`turfs/${id}`);
 };
-
-
-
-
-
 
 //get personal details
 const getPersonalDetails = async (id) => {
@@ -43,15 +38,18 @@ const getPersonalDetails = async (id) => {
 
 //add personal details
 const addPersonalDetails = async (data) => {
-  return BackendService.post("personalDetails/" , data);
+  return BackendService.post("personalDetails/", data);
 };
 
 //edit personal details
-const editPersonalDetails = async (id , data) => {
-  return BackendService.patch(`personalDetails/${id}` , data);
+const editPersonalDetails = async (id, data) => {
+  return BackendService.patch(`personalDetails/${id}`, data);
 };
 
-
+//get booked users details with turfId
+const getBookedUsersDetails = async (id) => {
+  return BackendService.get(`bookings/bookedby/${id}`);
+};
 
 const turfService = {
   getDistricts,
@@ -63,7 +61,6 @@ const turfService = {
   EditTurfDetails,
   editPersonalDetails,
   getTurfDetailsById,
-  
-
+  getBookedUsersDetails,
 };
 export default turfService;

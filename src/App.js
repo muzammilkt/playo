@@ -19,6 +19,7 @@ import ViewTurf from "../src/components/pages/TurfDetails/ViewTurf";
 import TurfViewById from "../src/components/pages/TurfDetails/TurfViewById";
 import TurfList from "../src/components/pages/TurfDetails/TurfList";
 import DistrictList from "../src/components/pages/TurfDetails/DistrictList";
+import BookedUserDetails from "./components/pages/BookedDetails/BookedUserDetails";
 //content provider
 import LoadingProvider from "./context/loadingContext";
 
@@ -69,6 +70,13 @@ function App() {
               <Route path="listforbooking/:id" element={<TimeList />} />
               <Route path="listforowner/:id" element={<TimeList />} />
 
+            </Route>
+            <Route path="bookedby">
+            <Route
+                path="/app/bookedby"
+                element={<Navigate to="app/booked/userList" />}
+              />
+            <Route path="userList/:id" element={<BookedUserDetails />} />
             </Route>
           </Route>
 
