@@ -175,6 +175,7 @@ NavSection.propTypes = {
 export default function NavSection({ navConfig, ...other }) {
   // pathname in useLocation component
   const { pathname } = useLocation();
+  const userType = localStorage.getItem("userType");
 
   //To match current url and nav url
   const match = (path) =>
@@ -184,9 +185,9 @@ export default function NavSection({ navConfig, ...other }) {
     <Box {...other}>
       <List disablePadding>
         {/* nav item component to map through navlink */}
-        {navConfig.map((item) => (
+        {navConfig.map((item) => !item?.permittedUser || item.permittedUser === userType?(
           <NavItem key={item.title} item={item} active={match} />
-        ))}
+        ):null)}
       </List>
     </Box>
   );

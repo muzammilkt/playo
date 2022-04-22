@@ -45,7 +45,7 @@ export default function AccountPopover() {
   const HandleLogout = () => {
       localStorage.clear();
       navigate("../user/login");
-      
+
   };
 
   //handle account popover close

@@ -1,4 +1,3 @@
-import { id } from "date-fns/locale";
 import BackendService from "./BackendService";
 
 //get all districts
@@ -46,7 +45,7 @@ const editPersonalDetails = async (id, data) => {
   return BackendService.patch(`personalDetails/${id}`, data);
 };
 
-//get booked users details with turfId
+//get booked users list
 const getBookedUsersDetails = async (id) => {
   return BackendService.get(`bookings/bookedby/${id}`);
 };

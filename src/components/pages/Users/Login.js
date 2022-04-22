@@ -62,6 +62,7 @@ export default function Login() {
       //storing token in localStorage
       localStorage.setItem(LOCAL_KEYS.AUTH_TOKEN, response.token);
       localStorage.setItem("userId",response._id)
+      localStorage.setItem("userType" ,response.userType);
       redirectionHandler(response.userType, response.status);
       
       loaderToggler(false);

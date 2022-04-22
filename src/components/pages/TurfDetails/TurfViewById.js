@@ -35,7 +35,6 @@ export default function TurfViewById() {
         loaderToggler(true);
         // get districts
         const turfDetails = await turfService.getTurfDetailsById(id);
-        console.log(turfDetails);
         setTurfs(turfDetails);
         loaderToggler(false);
       } catch (err) {

@@ -1,4 +1,4 @@
-import { useEffect, useState , useContext } from "react";
+import React , { useEffect, useState, useContext } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,18 +8,19 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  Stack,
-  Container,
-  Typography,
-  Grid,
   Button,
-  Card,
 } from "@mui/material";
 //loader
 import { loadingContext } from "../../../context/loadingContext";
 import Loader from "../../utils/Loader";
 // import { getTimeSlots } from "../../../services/timeSlotService";
 import TimeSlotService from "../../../services/timeSlotService";
+
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function TimeTable() {
   const { loaderToggler } = useContext(loadingContext);
@@ -28,6 +29,25 @@ export default function TimeTable() {
   const { id } = useParams();
   const [timeSlots, setTimeSlots] = useState();
 
+  //get unbooked timeSlots
+  const getBooking = () => {
+    try {
+      loaderToggler(true);
+      async function getTimeSlots() {
+        const res = await TimeSlotService.getTimeSlots(id);
+        console.log(res);
+        setTimeSlots(res);
+      }
+      getTimeSlots();
+      loaderToggler(false);
+      // navigate(`listforbooking/${id}`);
+    } catch (err) {
+      console.log(err.message);
+      loaderToggler(false);
+    }
+  };
+
+  //handle button for booking
   useEffect(() => {
     try {
       loaderToggler(true);
@@ -45,30 +65,29 @@ export default function TimeTable() {
     }
   }, []);
 
-  //handle button for booking
-  const handleBook = async (event , id) => {
+  const handleBook = (slotId) => async (event) => {
     try {
       loaderToggler(true);
-      const slotId = event.target.id;
-      console.log(slotId);
       const userId = localStorage.getItem("userId");
       const turfId = id;
-      const data={
+      const data = {
         userId,
         turfId,
-        // slotId
+        slotId,
       };
-      // const booking = await TimeSlotService.bookSlot(data);
-      // navigate("/app/time/list");
+      const booking = await TimeSlotService.bookSlot(data);
+      getBooking();
+      navigate(`/app/time/listforbooking/${id}`);
       loaderToggler(false);
     } catch (error) {
       console.error(error.response);
       loaderToggler(false);
     }
   };
-
   return (
     <TableContainer component={Paper}>
+      <Loader/>
+      <Alert severity="success">You Have Successfully Booked Your Slot!</Alert>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -89,7 +108,7 @@ export default function TimeTable() {
                     color="success"
                     disabled={row.booked ? "true" : ""}
                     variant="contained"
-                    onClick={(e) => handleBook(e,row._id)}
+                    onClick={handleBook(row._id)}
                   >
                     {row.booked ? "Booked" : "Book Now"}
                   </Button>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 // material UI components
 import {
@@ -25,6 +25,7 @@ import DataTableHead from "./DataTableHead";
 import DataTableToolbar from "./DataTableToolbar";
 import Scrollbar from "../Scrollbar";
 import SearchNotFound from "./SearchNotFound";
+import TimeSlotService from "../../../services/timeSlotService";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -79,7 +80,7 @@ export default function DataTable({ TABLE_HEAD, TABLE_DATA, SEARCH_ID }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = TABLE_DATA.map((n) => n.name);
+      const newSelecteds = TABLE_DATA.user.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -99,6 +100,14 @@ export default function DataTable({ TABLE_HEAD, TABLE_DATA, SEARCH_ID }) {
     setFilterName(event.target.value);
   };
 
+  const HandleDelete = (id) =>async(event)=> {
+    try {
+      await TimeSlotService.DeleteBooking(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - TABLE_DATA.length) : 0;
 
@@ -110,40 +119,55 @@ export default function DataTable({ TABLE_HEAD, TABLE_DATA, SEARCH_ID }) {
   );
 
   const isUserNotFound = filteredUsers.length === 0;
-
+  const getValueForCell = (data, key) => {
+    if (key.includes(".")) {
+      let value = data;
+      key.split(".").forEach((segment) => {
+        if (value) {
+          value = value[segment];
+        } else {
+          return undefined;
+        }
+      });
+      return value;
+    } else {
+      return data[key];
+    }
+  };
   const getRowCell = (col, value) => {
     const type = col.type;
+    const exactValue = getValueForCell(value, col.id);
     switch (type) {
       case "text":
-        return value[col.id];
-        case "button":
-          return (<DeleteIcon/>)
-          case "card":
+        return exactValue;
+      case "button":
+        return <DeleteIcon onClick={HandleDelete(value._id)}/>;
+      case "card":
       case "stack":
         return (
           <Stack
             direction="row"
             alignItems="center"
-            sx={{textDecoration:"none",color:"black"}}
+            sx={{ textDecoration: "none", color: "black" }}
             spacing={2}
             component={Link}
             to={`${col.baseUrl}/${value._id}`}
           >
-            <Avatar alt={value[col.id]} src={"#"} />
+            <Avatar alt={exactValue} src={"#"} />
             <Typography variant="subtitle2" noWrap>
-              {value[col.id]}
+              {exactValue}
             </Typography>
           </Stack>
         );
       case "userStatusChip":
         return (
           <Chip
-            label={value[col.id].toUpperCase()}
+            label={exactValue.toUpperCase()}
             variant="outlined"
             color={
-              value[col.id] === "created"
+              exactValue === "created"
                 ? "error"
-                : value[col.id] === "registred"
+                : exactValue === "registred"
                 ? "primary"
                 : "success"
             }

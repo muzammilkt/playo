@@ -22,7 +22,6 @@ export default function TurfList() {
         loaderToggler(true);
         // get districts
         const turfs = await turfService.getTurfs(id);
-        console.log(turfs)
         setSpots(turfs);
         loaderToggler(false);
       } catch (err) {
@@ -32,7 +31,7 @@ export default function TurfList() {
     };
     getTurfs();
   }, []);
-  // console.log(id);
+
   return (
     <Page title="Spot List">
       <Container>

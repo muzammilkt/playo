@@ -14,7 +14,6 @@ import turfService from "../../../services/turfService";
 //loader
 import { loadingContext } from "../../../context/loadingContext";
 import Loader from "../../utils/Loader";
-import { id } from "date-fns/locale";
 
 //taking userId from localstorage
 const userId = localStorage.getItem("userId");

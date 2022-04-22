@@ -33,11 +33,9 @@ export default function ViewTurf() {
       try {
         //taking userId from localstorage
         const userId = localStorage.getItem("userId");
-        // console.log(userId);
         loaderToggler(true);
         // get turflist for owner
         const turfDetails = await turfService.getTurfDetails(userId);
-        // console.log(turfDetails);
         setTurfs(turfDetails);
         loaderToggler(false);
       } catch (err) {
@@ -74,7 +72,13 @@ export default function ViewTurf() {
               </Button>
             </Grid>
           </Stack>
-          <Grid>
+          <Grid
+            container
+            direction="row"
+            justifyContent="flex"
+            alignItems="center"
+            sx={{gap:5}}
+          >
             {Turfs &&
               Turfs.map((turf) => (
                 <Link to={`../../bookedby/userList/${turf._id}`}>

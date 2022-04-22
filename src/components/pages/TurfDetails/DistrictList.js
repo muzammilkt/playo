@@ -26,7 +26,6 @@ export default function DistrictList() {
             loaderToggler(true);
             // get districts
             const districts = await turfService.getDistricts();
-            // console.log(districts)
             setDistrict(districts);
             loaderToggler(false);
           } catch (err) {

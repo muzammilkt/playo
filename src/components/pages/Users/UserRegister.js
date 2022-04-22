@@ -7,12 +7,10 @@ import TextInput from "./utils/TextInput";
 import SubmitButton from "./utils/SubmitButton";
 import Page from "../../utils/Page";
 //loader
-import Loader from "../../utils/Loader";
 import { loadingContext } from "../../../context/loadingContext";
 
 //importing the user service
 import authService from "../../../services/authService";
-import Login from "./Login";
 
 const ContentStyle = styled("div")(() => ({
   maxWidth: 400,
@@ -37,7 +35,6 @@ export default function UserRegister() {
   const [authErrors, setAuthErrors] = useState();
   const navigate = useNavigate();
 
-  const clearError = () => setAuthErrors("");
 
   const validatePasswordLength = () => {
     //password validation for min length
