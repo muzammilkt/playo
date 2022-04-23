@@ -91,7 +91,6 @@ export default function AddTurfDetails() {
         // get turfData
         const TurfData = await turfService.getTurfDetailsById(id);
         setState(TurfData);
-        console.log(TurfData);
         loaderToggler(false);
       } catch (err) {
         console.error(err?.response?.data?.message);
@@ -131,7 +130,6 @@ export default function AddTurfDetails() {
         navigate(`/app/spots/view/${updatedData._id}`);
         loaderToggler(false);
       }
-      // console.log(response);
     } catch (err) {
       console.error(err.message);
       loaderToggler(false);

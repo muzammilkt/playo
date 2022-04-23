@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 
 export default function GroundCard({ data, type }) {
-  // const deleteDepartment = () => {
-  //   console.log("onClinck");
-  // };
   const { colorType } = type;
   const RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: "none",

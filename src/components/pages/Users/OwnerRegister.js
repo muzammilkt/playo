@@ -59,12 +59,10 @@ export default function OwnerRegister() {
     const passwordLengthError = validatePasswordLength();
     const passwordMatchError = validatePasswordMatch();
     if (passwordLengthError || passwordMatchError) return;
-    // console.log(userName, email, password, confirmPassword);
     const data = { name: userName, email, password, userType };
     try {
       loaderToggler(true);
       const response = await authService.registerUser(data);
-      console.log(response);
       navigate("../login");
       loaderToggler(false);
     } catch (err) {

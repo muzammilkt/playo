@@ -34,7 +34,6 @@ export default function Login() {
   const clearError = () => setAuthErrors("");
 
   const redirectionHandler = (type, status) => {
-    // console.log(type,status);
     const userId = localStorage.getItem("userId");
     if (type === "admin" && status === "filled") {
       return navigate(`/app/spots/view`);
@@ -57,8 +56,6 @@ export default function Login() {
       };
       // logging in user
       const response = await authService.loginUser(data);
-      // console.log(response);
-      // console.log(response.token)
       //storing token in localStorage
       localStorage.setItem(LOCAL_KEYS.AUTH_TOKEN, response.token);
       localStorage.setItem("userId",response._id)
@@ -104,14 +101,6 @@ export default function Login() {
               justifyContent="space-between"
               sx={{ my: 2 }}
             >
-              <Link
-                component={RouterLink}
-                variant="subtitle2"
-                to="/user/forgot"
-              >
-                Forgot password
-              </Link>
-
               <Link
                 component={RouterLink}
                 variant="subtitle2"

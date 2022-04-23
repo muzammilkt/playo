@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React , { useState } from "react";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -26,6 +26,12 @@ import DataTableToolbar from "./DataTableToolbar";
 import Scrollbar from "../Scrollbar";
 import SearchNotFound from "./SearchNotFound";
 import TimeSlotService from "../../../services/timeSlotService";
+import MuiAlert from '@mui/material/Alert';
+import useConfirm from "./useConfirm";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -72,6 +78,7 @@ export default function DataTable({ TABLE_HEAD, TABLE_DATA, SEARCH_ID }) {
   const [filterName, setFilterName] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -98,14 +105,6 @@ export default function DataTable({ TABLE_HEAD, TABLE_DATA, SEARCH_ID }) {
 
   const handleFilterByName = (event) => {
     setFilterName(event.target.value);
-  };
-
-  const HandleDelete = (id) =>async(event)=> {
-    try {
-      await TimeSlotService.DeleteBooking(id);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const emptyRows =
@@ -141,7 +140,7 @@ export default function DataTable({ TABLE_HEAD, TABLE_DATA, SEARCH_ID }) {
       case "text":
         return exactValue;
       case "button":
-        return <DeleteIcon onClick={HandleDelete(value._id)}/>;
+        return <DeleteIcon onClick={col.deleteHandler(value._id)}/>;
       case "card":
       case "stack":
         return (

@@ -44,7 +44,6 @@ export default function Register() {
     const passwordLengthError = validatePasswordLength();
     const passwordMatchError = validatePasswordMatch();
     if (passwordLengthError || passwordMatchError) return;
-    console.log(password, confirmPassword);
   };
 
   return (

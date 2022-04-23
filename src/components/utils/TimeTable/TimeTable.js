@@ -1,4 +1,4 @@
-import React , { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,16 +7,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Button,
-} from "@mui/material";
+import { Button } from "@mui/material";
 //loader
 import { loadingContext } from "../../../context/loadingContext";
 import Loader from "../../utils/Loader";
 // import { getTimeSlots } from "../../../services/timeSlotService";
 import TimeSlotService from "../../../services/timeSlotService";
 
-import MuiAlert from '@mui/material/Alert';
+import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -24,18 +22,21 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function TimeTable() {
   const { loaderToggler } = useContext(loadingContext);
+  const [confirmed, setConfirmed] = useState();
 
   const navigate = useNavigate();
   const { id } = useParams();
   const [timeSlots, setTimeSlots] = useState();
-
+  const confirmedHandler = () => {
+    setConfirmed(true);
+    setTimeout(() => setConfirmed(false), 3000);
+  };
   //get unbooked timeSlots
   const getBooking = () => {
     try {
       loaderToggler(true);
       async function getTimeSlots() {
         const res = await TimeSlotService.getTimeSlots(id);
-        console.log(res);
         setTimeSlots(res);
       }
       getTimeSlots();
@@ -53,7 +54,6 @@ export default function TimeTable() {
       loaderToggler(true);
       async function getTimeSlots() {
         const res = await TimeSlotService.getTimeSlots(id);
-        console.log(res);
         setTimeSlots(res);
       }
       getTimeSlots();
@@ -77,6 +77,7 @@ export default function TimeTable() {
       };
       const booking = await TimeSlotService.bookSlot(data);
       getBooking();
+      confirmedHandler();
       navigate(`/app/time/listforbooking/${id}`);
       loaderToggler(false);
     } catch (error) {
@@ -86,8 +87,12 @@ export default function TimeTable() {
   };
   return (
     <TableContainer component={Paper}>
-      <Loader/>
-      <Alert severity="success">You Have Successfully Booked Your Slot!</Alert>
+      <Loader />
+      {confirmed && (
+        <Alert severity="success">
+          You Have Successfully Booked Your Slot!
+        </Alert>
+      )}
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>

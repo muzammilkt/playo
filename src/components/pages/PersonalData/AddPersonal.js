@@ -49,7 +49,6 @@ export default function AddPersonal() {
         // get  personal details
         const details = await turfService.getPersonalDetails(userId);
         setState(details);
-        console.log(details);
         loaderToggler(false);
       } catch (err) {
         console.error(err?.response?.data?.message);
@@ -61,7 +60,6 @@ export default function AddPersonal() {
 
   //add personal data data
   const handleAddData = async () => {
-    console.log(userId);
     try {
       loaderToggler(true);
       const personalData = {
@@ -75,7 +73,6 @@ export default function AddPersonal() {
       if (!id) {
         // adding personal details to db
         const response = await turfService.addPersonalDetails(personalData);
-        // console.log(response);
         navigate(`../view/`);
         loaderToggler(false);
       } else {
@@ -83,7 +80,6 @@ export default function AddPersonal() {
           id,
           personalData
         );
-        console.log(updateResponse);
         navigate(`../view/`);
         loaderToggler(false);
       }

@@ -11,7 +11,7 @@ import NavSection from "./NavSection";
 import { MHidden } from "../../@material-extent";
 import NavConfig from "./NavConfig";
 import Logo from "../../../images/Logo.png";
-import ProfileImg from '../../../images/avatar.jpg'
+import ProfileImg from "../../../images/avatar.jpg";
 // import account from '../../_mocks_/account';
 
 // drawer width for mobile devices
@@ -24,7 +24,6 @@ const RootStyle = styled("div")(({ theme }) => ({
     width: DRAWER_WIDTH,
   },
 }));
-
 
 // profile card styel
 const AccountStyle = styled("div")(({ theme }) => ({
@@ -43,6 +42,8 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
+
+  const userType = localStorage.getItem("userType");
 
   useEffect(() => {
     if (isOpenSidebar) {
@@ -74,11 +75,11 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           <AccountStyle>
             <Avatar src={ProfileImg} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-               muzammil
+              <Typography variant="subtitle2" sx={{ color: "text.primary" }}>
+                Playo
               </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Admin
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                {userType}
               </Typography>
             </Box>
           </AccountStyle>

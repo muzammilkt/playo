@@ -11,41 +11,13 @@ import turfService from "../../../services/turfService";
 import { loadingContext } from "../../../context/loadingContext";
 import Loader from "../../utils/Loader";
 
-//taking userId from localstorage
-const TABLE_HEAD = [
-  {
-    id: "userId.name",
-    label: "Name",
-    alignRight: false,
-    type: "stack",
-  },
-  {
-    id: "userId.phonenmbr",
-    label: "Phone Number",
-    alignRight: false,
-    type: "text",
-  },
-  {
-    id: "userId.email",
-    label: "Email",
-    alignRight: false,
-    type: "text",
-  },
-  {
-    id: "slotId.slot",
-    label: "Slot",
-    alignRight: false,
-    type: "text",
-  },
-  {
-    id: "_id",
-    label: "Delete Booking",
-    alignRight: false,
-    type: "button",
-  },
-];
+import TimeSlotService from "../../../services/timeSlotService";
+import useConfirm from "../../utils/DataTable/useConfirm";
 
 export default function BookedUserDetails() {
+  const { ConfirmSnack, confirmToggler } = useConfirm(
+    "Slot successfuly deleted"
+  );
   const { loaderToggler } = useContext(loadingContext);
   const { id } = useParams();
   const [bookedDetails, setBookedDetails] = useState();
@@ -57,7 +29,6 @@ export default function BookedUserDetails() {
         loaderToggler(true);
         // get user data
         const userDetails = await turfService.getBookedUsersDetails(id);
-        console.log(userDetails);
         setBookedDetails(userDetails);
         loaderToggler(false);
       } catch (err) {
@@ -68,6 +39,63 @@ export default function BookedUserDetails() {
     getUserData();
   }, []);
 
+  const getUserData = async () => {
+    try {
+      loaderToggler(true);
+      // get user data
+      const userDetails = await turfService.getBookedUsersDetails(id);
+      setBookedDetails(userDetails);
+      loaderToggler(false);
+    } catch (err) {
+      console.error(err?.response?.data?.message);
+      loaderToggler(false);
+    }
+  };
+  //delete booking
+  const HandleDelete = (id) => async (event) => {
+    try {
+      await TimeSlotService.DeleteBooking(id);
+      getUserData();
+      confirmToggler();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //taking userId from localstorage
+  const TABLE_HEAD = [
+    {
+      id: "userId.name",
+      label: "Name",
+      alignRight: false,
+      type: "stack",
+    },
+    {
+      id: "userId.phonenmbr",
+      label: "Phone Number",
+      alignRight: false,
+      type: "text",
+    },
+    {
+      id: "userId.email",
+      label: "Email",
+      alignRight: false,
+      type: "text",
+    },
+    {
+      id: "slotId.slot",
+      label: "Slot",
+      alignRight: false,
+      type: "text",
+    },
+    {
+      id: "_id",
+      label: "Delete Booking",
+      alignRight: false,
+      type: "button",
+      deleteHandler: HandleDelete,
+    },
+  ];
+
   return (
     <Page title="Booked Users Data">
       <Container>
@@ -77,11 +105,14 @@ export default function BookedUserDetails() {
           alignItems="left"
           justifyContent="space-between"
           mb={2}
-        ></Stack>
-
+        >
+        </Stack>
+        <ConfirmSnack />
         <Grid>
-{bookedDetails && <DataTable TABLE_HEAD={TABLE_HEAD} TABLE_DATA={bookedDetails} />
-}        </Grid>
+          {bookedDetails && (
+            <DataTable TABLE_HEAD={TABLE_HEAD} TABLE_DATA={bookedDetails} />
+          )}{" "}
+        </Grid>
       </Container>
     </Page>
   );

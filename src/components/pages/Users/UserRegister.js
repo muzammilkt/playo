@@ -71,7 +71,6 @@ export default function UserRegister() {
     try {
       loaderToggler(true);
       const response = await authService.registerUser(data);
-      console.log(response);
       navigate("../login");
       loaderToggler(false);
     } catch (err) {

@@ -30,7 +30,6 @@ useEffect(() => {
       loaderToggler(true);
       // get personal data
       const PersonalDetails = await turfService.getPersonalDetails(userId);
-      console.log(PersonalDetails);
       setPersonalData(PersonalDetails);
       loaderToggler(false);
     } catch (err) {
